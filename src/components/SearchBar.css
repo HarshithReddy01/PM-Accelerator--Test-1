@@ -240,7 +240,7 @@
   }
   
   .search-input {
-    padding: 0 55px 0 50px;
+    padding: 0 120px 0 50px;
     font-size: 16px; 
   }
   
@@ -250,9 +250,16 @@
   }
   
   .clear-button {
-    right: 48px;
+    right: 80px;
     width: 26px;
     height: 26px;
+  }
+  
+  .location-button {
+    right: 44px;
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
   }
   
   .search-button {
@@ -269,7 +276,8 @@
   }
   
   .search-input {
-    padding: 0 50px 0 45px;
+    padding: 0 110px 0 45px;
+    font-size: 15px;
   }
   
   .search-icon {
@@ -278,13 +286,20 @@
   }
   
   .clear-button {
-    right: 44px;
+    right: 72px;
     width: 24px;
     height: 24px;
   }
   
   .clear-button svg {
     font-size: 11px;
+  }
+  
+  .location-button {
+    right: 40px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
   }
   
   .search-button {
