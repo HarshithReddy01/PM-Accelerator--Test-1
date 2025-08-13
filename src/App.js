@@ -39,7 +39,7 @@ function HomePage() {
         playsInline
         preload="auto"
       >
-        <source src="/Assests/naturevideo.mp4" type="video/mp4" />
+        <source src={`${process.env.PUBLIC_URL}/Assests/naturevideo.mp4`} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className="container">
@@ -58,7 +58,7 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/PM-Accelerator--Test-1">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/weather/:location" element={<WeatherPage />} />
