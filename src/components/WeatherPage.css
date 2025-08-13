@@ -26,11 +26,27 @@
 .weather-page-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
   margin-bottom: 30px;
   flex-wrap: wrap;
   position: relative;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
 }
 
 .weather-page-header h1 {
@@ -43,8 +59,6 @@
 }
 
 .back-button {
-  position: absolute;
-  left: 0;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 25px;
@@ -67,6 +81,33 @@
 
 .back-button:active {
   transform: translateY(0);
+}
+
+.location-button-weather {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.location-button-weather:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.location-button-weather:active {
+  transform: scale(0.95);
 }
 
 .error-section {
@@ -122,6 +163,12 @@
     padding: 10px 16px;
   }
   
+  .location-button-weather {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  
   .weather-layout {
     gap: 15px;
   }
@@ -139,16 +186,32 @@
     position: relative;
   }
   
-  .weather-page-header h1 {
+  .header-left {
+    order: 1;
+    align-self: flex-start;
+  }
+  
+  .header-center {
     order: 2;
+  }
+  
+  .header-right {
+    order: 3;
+    align-self: flex-end;
+  }
+  
+  .weather-page-header h1 {
     margin-top: 10px;
   }
   
   .back-button {
-    order: 1;
     padding: 8px 14px;
-    position: static;
-    align-self: flex-start;
+  }
+  
+  .location-button-weather {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
   }
   
   .weather-layout {

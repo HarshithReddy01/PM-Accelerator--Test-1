@@ -122,6 +122,23 @@ function WeatherPage() {
     navigate('/');
   };
 
+  const handleLocationClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          navigate(`/weather/${latitude},${longitude}`);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          setError('Unable to get your location. Please check your browser permissions.');
+        }
+      );
+    } else {
+      setError('Geolocation is not supported by your browser.');
+    }
+  };
+
   const handleUnitToggle = () => {
     setUnit(prevUnit => prevUnit === 'metric' ? 'imperial' : 'metric');
   };
@@ -142,10 +159,23 @@ function WeatherPage() {
       
       <div className="weather-page-container">
         <header className="weather-page-header">
-          <button className="back-button" onClick={handleBackClick}>
-            ← Back to Search
-          </button>
-          <h1>Weather Forecast</h1>
+          <div className="header-left">
+            <button className="back-button" onClick={handleBackClick}>
+              ← Back to Search
+            </button>
+          </div>
+          <div className="header-center">
+            <h1>Weather Forecast</h1>
+          </div>
+          <div className="header-right">
+            <button 
+              className="location-button-weather"
+              onClick={handleLocationClick}
+              aria-label="Get weather for my current location"
+            >
+              📍
+            </button>
+          </div>
         </header>
 
         {loading && <LoadingSpinner />}
