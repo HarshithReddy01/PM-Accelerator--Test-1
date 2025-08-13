@@ -6,6 +6,7 @@ const SearchBar = ({ onSearch, onLocationClick, variant = 'default' }) => {
   const [query, setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+  const [isLocationLoading, setIsLocationLoading] = useState(false);
   const inputRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -40,11 +41,26 @@ const SearchBar = ({ onSearch, onLocationClick, variant = 'default' }) => {
     }
   };
 
+  const handleLocationClick = () => {
+    if (onLocationClick) {
+      setIsLocationLoading(true);
+      onLocationClick();
+      setTimeout(() => setIsLocationLoading(false), 3000);
+    }
+  };
+
   useEffect(() => {
     if (variant === 'sticky') {
       inputRef.current?.focus();
     }
   }, [variant]);
+
+  const getPlaceholder = () => {
+    if (window.innerWidth <= 480) {
+      return "Search city, ZIP code...";
+    }
+    return "Search ZIP code, coordinates, landmarks, town, city…";
+  };
 
   return (
     <form className={`search-bar ${variant}`} onSubmit={handleSubmit}>
@@ -58,7 +74,7 @@ const SearchBar = ({ onSearch, onLocationClick, variant = 'default' }) => {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onKeyDown={handleKeyDown}
-          placeholder="Search ZIP code, coordinates, landmarks, town, city…"
+          placeholder={getPlaceholder()}
           className="search-input"
           aria-label="Search for weather by location"
           aria-invalid={isInvalid}
@@ -77,11 +93,12 @@ const SearchBar = ({ onSearch, onLocationClick, variant = 'default' }) => {
         {onLocationClick && (
           <button
             type="button"
-            onClick={onLocationClick}
-            className="location-button"
+            onClick={handleLocationClick}
+            className={`location-button ${isLocationLoading ? 'loading' : ''}`}
             aria-label="Get weather for my current location"
+            disabled={isLocationLoading}
           >
-            📍
+            {isLocationLoading ? '⏳' : '📍'}
           </button>
         )}
         <button

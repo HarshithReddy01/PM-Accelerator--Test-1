@@ -163,6 +163,22 @@
   transform: scale(0.95);
 }
 
+.location-button.loading {
+  background: rgba(59, 130, 246, 0.1);
+  color: rgba(59, 130, 246, 0.8);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.location-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 .search-button {
   position: absolute;
   right: 16px;
@@ -235,12 +251,12 @@
   }
   
   .search-input-container {
-    height: 52px;
+    height: 56px;
     border-radius: 14px;
   }
   
   .search-input {
-    padding: 0 120px 0 50px;
+    padding: 0 80px 0 50px;
     font-size: 16px; 
   }
   
@@ -250,33 +266,30 @@
   }
   
   .clear-button {
-    right: 80px;
-    width: 26px;
-    height: 26px;
+    right: 50px;
+    width: 28px;
+    height: 28px;
   }
   
   .location-button {
-    right: 44px;
-    width: 30px;
-    height: 30px;
-    font-size: 0.9rem;
+    display: none;
   }
   
   .search-button {
     right: 14px;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
   }
 }
 
 @media (max-width: 480px) {
   .search-input-container {
-    height: 48px;
+    height: 52px;
     border-radius: 12px;
   }
   
   .search-input {
-    padding: 0 110px 0 45px;
+    padding: 0 70px 0 45px;
     font-size: 15px;
   }
   
@@ -286,9 +299,9 @@
   }
   
   .clear-button {
-    right: 72px;
-    width: 24px;
-    height: 24px;
+    right: 44px;
+    width: 26px;
+    height: 26px;
   }
   
   .clear-button svg {
@@ -296,16 +309,13 @@
   }
   
   .location-button {
-    right: 40px;
-    width: 28px;
-    height: 28px;
-    font-size: 0.85rem;
+    display: none;
   }
   
   .search-button {
     right: 12px;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
   }
   
   .search-button svg {

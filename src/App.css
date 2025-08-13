@@ -52,6 +52,7 @@ body {
 }
 
 .header-content {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -60,13 +61,35 @@ body {
   text-align: center;
 }
 
+.mobile-location-button {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .pm-accelerator-section {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
   margin-bottom: 0;
   position: relative;
   z-index: 2;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+}
+
+.pm-accelerator-left {
+  display: flex;
+  align-items: center;
+}
+
+.pm-accelerator-right {
+  display: flex;
+  align-items: center;
 }
 
 .pm-accelerator-link {
@@ -91,6 +114,33 @@ body {
 
 .pm-accelerator-link:active {
   transform: translateY(0);
+}
+
+.mobile-location-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.mobile-location-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.mobile-location-btn:active {
+  transform: scale(0.95);
 }
 
 .app-header h1 {
@@ -197,8 +247,17 @@ background: linear-gradient(180deg, rgba(148, 163, 184, 0.12) 0%, rgba(203, 213,
     margin-bottom: 12px;
   }
   
+  .mobile-location-button {
+    display: block;
+  }
+  
+  .mobile-location-btn {
+    display: flex;
+  }
+  
   .pm-accelerator-section {
     margin-bottom: 16px;
+    padding: 0 16px;
   }
   
   .pm-accelerator-link {

@@ -44,13 +44,24 @@ function HomePage() {
       </video>
       
       <div className="pm-accelerator-section">
-        <a 
-          href="https://www.pmaccelerator.io/" 
-          rel="noopener noreferrer"
-          className="pm-accelerator-link"
-        >
-          About Us
-        </a>
+        <div className="pm-accelerator-left">
+          <button
+            onClick={handleLocationClick}
+            className="mobile-location-btn"
+            aria-label="Get weather for my current location"
+          >
+            📍
+          </button>
+        </div>
+        <div className="pm-accelerator-right">
+          <a 
+            href="https://www.pmaccelerator.io/" 
+            rel="noopener noreferrer"
+            className="pm-accelerator-link"
+          >
+            About Us
+          </a>
+        </div>
       </div>
       
       <div className="container">
