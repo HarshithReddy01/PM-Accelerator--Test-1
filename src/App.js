@@ -42,10 +42,25 @@ function HomePage() {
         <source src={`${process.env.PUBLIC_URL}/Assests/naturevideo.mp4`} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+      
+      <div className="pm-accelerator-section">
+        <a 
+          href="https://www.pmaccelerator.io/" 
+          rel="noopener noreferrer"
+          className="pm-accelerator-link"
+        >
+          About Us
+        </a>
+      </div>
+      
       <div className="container">
         <header className="app-header">
-          <h1>Weather Forecast</h1>
-          <p>Get real-time weather information for any location</p>
+          <div className="header-content">
+            <div className="header-main">
+              <h1>Weather Forecast</h1>
+              <p>Get real-time weather information for any location.</p>
+            </div>
+          </div>
         </header>
 
         <div className="search-section">
