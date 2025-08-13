@@ -4,6 +4,10 @@ A clean, responsive React app that shows live weather for anywhere on the planet
 # What This Project Does?
 As a User type a city, ZIP/postal code, GPS coordinates (Latitudes, logitudes (example format- 4521488, -4555784)), or a well‑known place, and you’ll get accurate weather on the spot. The web app shows current conditions, a 5‑day outlook, and key stats like humidity, wind, pressure, and visibility. It can also use your device location to auto‑detect where you are and load the forecast instantly.
 
+# Deployed in Git hub pages
+## Live Demo-
+https://harshithreddy01.github.io/PM-Accelerator--Test-1/
+
 
 
 ## Features
