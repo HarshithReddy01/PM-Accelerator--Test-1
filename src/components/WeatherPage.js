@@ -6,8 +6,8 @@ import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
 import './WeatherPage.css';
 
-const API_KEY = 'ec784b133d32aafc9a94a859ab777fa5';
-const BASE_URL = 'http://api.openweathermap.org/data/2.5';
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 function WeatherPage() {
   const { location } = useParams();
@@ -18,69 +18,13 @@ function WeatherPage() {
   const [error, setError] = useState(null);
   const [unit, setUnit] = useState('metric');
 
-  // data from API
-  const fetchWeatherData = useCallback(async (query) => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      let response;
-      let searchQuery = query.trim();
-      
-       if (searchQuery.includes(',')) {
-         const [lat, lon] = searchQuery.split(',').map(coord => coord.trim());
-         
-         // make sure coordinates are valid
-         const latNum = parseFloat(lat);
-         const lonNum = parseFloat(lon);
-        
-                 if (isNaN(latNum) || isNaN(lonNum)) {
-           throw new Error('Coordinates look wrong. Try format: latitude,longitude (like 40.7128,-74.0060)');
-         }
-         
-         if (latNum < -90 || latNum > 90) {
-           throw new Error('Latitude should be between -90 and 90');
-         }
-         
-         if (lonNum < -180 || lonNum > 180) {
-           throw new Error('Longitude should be between -180 and 180');
-         }
-        
-        response = await fetch(
-          `${BASE_URL}/weather?lat=${latNum}&lon=${lonNum}&appid=${API_KEY}&units=${unit}`
-        );
-             } else {
-         response = await fetch(
-           `${BASE_URL}/weather?q=${encodeURIComponent(searchQuery)}&appid=${API_KEY}&units=${unit}`
-         );
-       }
-      
-             if (!response.ok) {
-         if (response.status === 404) {
-           throw new Error(`Can't find "${searchQuery}". Check the spelling or try something else.`);
-         } else if (response.status === 429) {
-           throw new Error('Too many requests. Wait a bit and try again.');
-         } else {
-           throw new Error('Something went wrong. Try again.');
-         }
-       }
-      
-             const data = await response.json();
-       setWeatherData(data);
-       
-       // forecast too
-       await fetchForecastData(data.coord.lat, data.coord.lon);
-    } catch (err) {
-      setError(err.message);
-      setWeatherData(null);
-      setForecastData(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [unit]);
-
-  // 5 day forecast
+    // 5 day forecast
   const fetchForecastData = useCallback(async (lat, lon) => {
+    if (!API_KEY) {
+      console.error('API key not configured for forecast');
+      return;
+    }
+    
     try {
       const response = await fetch(
         `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${unit}`
@@ -97,6 +41,76 @@ function WeatherPage() {
       setForecastData(null);
     }
   }, [unit]);
+
+  // data from API
+  const fetchWeatherData = useCallback(async (query) => {
+    if (!API_KEY) {
+      setError('API key not configured. Please check your environment variables.');
+      setLoading(false);
+      return;
+    }
+    
+    setLoading(true);
+    setError(null);
+    
+    try {
+      let response;
+      let searchQuery = query.trim();
+      
+       if (searchQuery.includes(',')) {
+         const [lat, lon] = searchQuery.split(',').map(coord => coord.trim());
+         
+         // Validity check
+         const latNum = parseFloat(lat);
+         const lonNum = parseFloat(lon);
+         
+                 if (isNaN(latNum) || isNaN(lonNum)) {
+           throw new Error('Coordinates look wrong. Try format: latitude,longitude (like 40.7128,-74.0060)');
+         }
+         
+         if (latNum < -90 || latNum > 90) {
+           throw new Error('Latitude should be between -90 and 90');
+         }
+         
+         if (lonNum < -180 || lonNum > 180) {
+           throw new Error('Longitude should be between -180 and 180');
+         }
+         
+                 response = await fetch(
+           `${BASE_URL}/weather?lat=${latNum}&lon=${lonNum}&appid=${API_KEY}&units=${unit}`
+         );
+             } else {
+         response = await fetch(
+           `${BASE_URL}/weather?q=${encodeURIComponent(searchQuery)}&appid=${API_KEY}&units=${unit}`
+         );
+       }
+       
+             if (!response.ok) {
+         console.error('API Error:', response.status, response.statusText);
+         if (response.status === 404) {
+           throw new Error(`Can't find "${searchQuery}". Check the spelling or try something else.`);
+         } else if (response.status === 429) {
+           throw new Error('Too many requests. Wait a bit and try again.');
+         } else if (response.status === 401) {
+           throw new Error('API key is invalid. Please check your configuration.');
+         } else {
+           throw new Error('Try again.');
+         }
+       }
+       
+             const data = await response.json();
+       setWeatherData(data);
+       
+       // forecast too
+       await fetchForecastData(data.coord.lat, data.coord.lon);
+    } catch (err) {
+      setError(err.message);
+      setWeatherData(null);
+      setForecastData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [unit, fetchForecastData]);
 
   useEffect(() => {
     if (location) {
